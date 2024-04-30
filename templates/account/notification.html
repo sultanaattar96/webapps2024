@@ -1,0 +1,114 @@
+{% extends "users/base.html" %}
+{% block title %} Notifications {% endblock title %}
+{% block content %}
+    <br>
+    <div class="container">
+        <h2>Notifications</h2>
+        <ul class="notification-list">
+            {% for notification in notifications %}
+                <li class="notification-item {% if notification.payment_status == 'Pending' %}pending{% elif notification.payment_status == 'Approved' %}approved{% else %}rejected{% endif %}">
+                    <!-- Display notification details -->
+                    <span class="notification-message">{{ notification.message }}</span>
+                    <span class="notification-timestamp">{{ notification.timestamp }}</span>
+                    <span class="notification-status">{{ notification.status }}</span>
+
+                    <!-- Display payment request details -->
+                    <div class="payment-details">
+                        <span class="payment-status">{{ notification.payment_status }}</span>
+                        {% if notification.payment_status == 'Pending' %}
+                            <a href="{% url 'payapp:account-payment_approval'%}?payment_request_id={{ notification.payment_request.id }}" class="request-approval-link">Go to Approval Payment</a>
+                        {% endif %}
+                        <!-- Add more fields as needed -->
+                    </div>
+                </li>
+                {% empty %}
+                <li class="notification-item no-notifications">No notifications to show.</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    {% if errors %}
+        <div class="alert">
+            <strong>Error!</strong> Please correct the following errors:
+            <ul>
+                {% for error in errors %}
+                    <li>{{ error|escape }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <style>
+        .request-approval-link {
+            color: #007bff; /* Blue link color */
+            text-decoration: underline;
+            margin-left: 10px;
+        }
+
+        .notification-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .notification-item {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .notification-item:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .notification-content {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .notification-message {
+            font-size: 16px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .notification-timestamp {
+            font-size: 12px;
+            color: #6c757d;
+        }
+
+        .notification-status {
+            font-weight: bold;
+            text-transform: capitalize;
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: #fff;
+        }
+
+        .notification-item.pending .notification-status {
+            background-color: #ffc107; /* Yellow for pending */
+        }
+
+        .notification-item.approved .notification-status {
+            background-color: #28a745; /* Green for approved */
+        }
+
+        .notification-item.rejected .notification-status {
+            background-color: #dc3545; /* Red for rejected */
+        }
+
+        .no-notifications {
+            text-align: center;
+            padding: 20px;
+            font-style: italic;
+            color: #6c757d;
+        }
+    </style>
+{% endblock content %}

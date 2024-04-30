@@ -1,0 +1,67 @@
+{% extends "users/base.html" %}
+{% block title %} {{ page_title }} {% endblock title %}
+{% block content %}
+    <br>
+    <!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{{ page_title }}</title>
+        <style>
+            body {
+                font-family: 'Arial', sans-serif;
+                background-color: #f4f4f4;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+            }
+            .success-container {
+                text-align: center;
+                background-color: #fff;
+                padding: 20px;
+                border-radius: 5px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .success-icon {
+                color: #4BB543;
+                font-size: 50px;
+            }
+            .success-message {
+                font-size: 24px;
+                color: #333;
+                margin: 20px 0;
+            }
+            .success-details {
+                font-size: 16px;
+                color: #666;
+                margin-bottom: 20px;
+            }
+            .button {
+                background-color: #4BB543;
+                color: #fff;
+                border: none;
+                padding: 10px 20px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 4px 2px;
+                cursor: pointer;
+                border-radius: 5px;
+            }
+        </style>
+    </head>
+    <body>
+    <div class="success-container">
+        <div class="success-icon">✔️</div>
+        <div class="success-message">{{ success_message }}</div>
+        <div class="success-details">{{ success_details }}</div>
+    </div>
+    </body>
+    </html>
+
+{% endblock content %}

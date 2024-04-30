@@ -1,0 +1,127 @@
+{% extends "users/base.html" %}
+
+{% block title %}Payment Approval{% endblock title %}
+
+{% block content %}
+    <div class="payment-approval-container">
+        <h2 class="text-center">Payment Approval</h2>
+        {% if payment_request %}
+            <div class="payment-request-card">
+                <p class="payment-detail"><strong>Message:</strong> {{ payment_request.message }}</p>
+                <p class="payment-detail"><strong>Amount:</strong> {{ payment_request.amount }}</p>
+                <p class="payment-detail"><strong>Currency:</strong> {{ payment_request.currency }}</p>
+            </div>
+            <form action="{% url 'payapp:account-payment_approval' %}" method="post" class="approval-form">
+                {% csrf_token %}
+                <input type="hidden" name="payment_request_id" value="{{ payment_request.id }}">
+                <div class="form-group">
+                    <label for="action" class="form-label">Action:</label>
+                    <select class="form-control" id="action" name="action" required>
+                        <option value="">Select Action</option>
+                        <option value="approve">Approve</option>
+                        <option value="reject">Reject</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </form>
+        {% else %}
+            <p class="no-request-message">No payment request found.</p>
+        {% endif %}
+
+        <br>
+
+        {% if form.errors %}
+            <div class="alert">
+                <strong>Error!</strong> Please correct the following errors:
+                <ul>
+                    {% for field, errors in form.errors.items %}
+                        {% for error in errors %}
+                            <li>{{ error|escape }}</li>
+                        {% endfor %}
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+    </div>
+
+    <style>
+        .payment-approval-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .payment-request-card {
+            margin-bottom: 30px;
+            padding: 15px;
+            border: 1px solid #eaeaea;
+            border-radius: 8px;
+            background-color: #f8f8f8;
+        }
+
+        .payment-detail {
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .approval-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .form-control {
+            padding: 10px;
+            border: 1px solid #eaeaea;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .btn-approve {
+            background-color: #28a745;
+            color: white;
+        }
+
+        .btn-reject {
+            background-color: #dc3545;
+            color: white;
+        }
+
+        .btn-approve:hover {
+            background-color: #218838;
+        }
+
+        .btn-reject:hover {
+            background-color: #c82333;
+        }
+
+        .no-request-message {
+            text-align: center;
+            color: #6c757d;
+        }
+    </style>
+{% endblock content %}
