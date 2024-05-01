@@ -16,7 +16,7 @@ What things you need to install the software and how to install them
 
 $ pip install djangorestframework
 $ pip install django-money
-$ pip install psycopg2
+$ pip install psycopg2 ### server install
 $ pip install social-auth-app-django
 $ pip install requests
 $ python manage.py createsuperuser --username admin1 --email admin1@example.com
@@ -26,6 +26,10 @@ $ python manage.py runserver
 
 
 $ pip install thrift thriftpy2
+
+
+sudo apt install postgresql postgresql-contrib
+
 
 
 
