@@ -89,7 +89,7 @@ WSGI_APPLICATION = 'webapps2024.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'payapp',
+        'NAME': 'sul',
         'USER': 'postgres',
         'PASSWORD': '800499',
         'HOST': 'localhost'
