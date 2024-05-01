@@ -91,8 +91,9 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'payapp',
         'USER': 'postgres',
-        'PASSWORD': '800499',
-        'HOST': 'localhost'
+        'PASSWORD': '2504800499',
+        'HOST': 'payapp.c9uousgswmv6.us-east-1.rds.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
