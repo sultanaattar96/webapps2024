@@ -25,7 +25,7 @@ $ python manage.py migrate
 $ python manage.py runserver
 
 
-$ pip install django-thrift
+$ pip install thrift thriftpy2
 
 
 

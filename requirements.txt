@@ -1,0 +1,7 @@
+djangorestframework
+django-money
+psycopg2
+social-auth-app-django
+requests
+thrift
+thriftpy2
