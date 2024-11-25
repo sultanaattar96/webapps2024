@@ -67,14 +67,18 @@ class RegisterView(View):
 
             # the system should make the appropriate conversion to assign the right initial amount of money
             if currency != base:
-                response = requests.get(
-                    f'{settings.BASE_URL}/currency_conversion/conversion/{base}/{currency}/{balance}')
-                if response.status_code == 200:
-                    balance = Decimal(str(response.json()['converted_amount']))
-                    print('acc_balance $$$$$$ -> ', balance)
-                else:
-                    print(f"Request failed with status code {response.status_code}")
-                    return
+                try:
+                    response = requests.get(
+                        f'{settings.BASE_URL}/currency_conversion/conversion/{base}/{currency}/{balance}')
+                    response.raise_for_status()  # Raises a HTTPError if the response status is 4xx, 5xx
+                except requests.exceptions.RequestException as e:
+                    messages.error(request, f'Currency conversion API request failed: {str(e)}')
+                    return render(request, self.template_name, {'form': form})
+            try:
+                balance = Decimal(str(response.json()['converted_amount']))
+                print('acc_balance $$$$$$ -> ', balance)
+
+
 
             user.profile.balance = balance
             user.profile.save()
